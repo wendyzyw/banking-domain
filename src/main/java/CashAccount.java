@@ -2,7 +2,7 @@
  * The modeling of CashAccount is implemented in a minimal form as a single unit of encapsulation wrapping a balance
  * and exposing methods for retrieving and modifying the balance
  * */
-public class CashAccount {
+public class CashAccount implements IAccount {
     private double balance;
 
     public CashAccount() {
@@ -15,5 +15,10 @@ public class CashAccount {
 
     public void updateBalance(double amount) {
         this.balance += amount;
+    }
+
+    @Override
+    public ACCOUNT_TYPE getAccountType() {
+        return ACCOUNT_TYPE.CASH;
     }
 }
