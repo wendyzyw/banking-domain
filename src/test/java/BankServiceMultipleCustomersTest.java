@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import Account.IAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,8 @@ public class BankServiceMultipleCustomersTest {
     void setUp() {
         mockBank = new Bank();
         bankService = new BankService(mockBank);
-        bankService.openAccountWithBank(CUSTOMER_ID_1, mockBank);
-        bankService.openAccountWithBank(CUSTOMER_ID_2, mockBank);
+        bankService.openAccountWithBank(CUSTOMER_ID_1, mockBank, IAccount.ACCOUNT_TYPE.CASH);
+        bankService.openAccountWithBank(CUSTOMER_ID_2, mockBank, IAccount.ACCOUNT_TYPE.CASH);
     }
 
     @Test

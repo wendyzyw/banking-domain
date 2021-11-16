@@ -1,3 +1,8 @@
+import Account.CashAccount;
+import Account.IAccount;
+import Account.SavingsAccount;
+import Exceptions.TransactionNotSupportedException;
+
 /**
  * This is a service layer which can be exposed to client/consumer application to manipulate account and perform
  * transactions. The BankService is responsible for
@@ -6,24 +11,30 @@
  * 2). Deals with internally exposed methods from Bank
  * 3). Potentially deals with customer authentication and authorization (not implemented in this task)
  * */
-public class BankService implements IBankService {
+public class BankService {
 
-    Bank bank;
+    final Bank bank;
 
     public BankService(Bank bank) {
         this.bank = bank;
     }
 
     /**
-     * This initializes a CashAccount instance and associates it with a customerId and registers this with the specified
-     * bank, returns the cashAccount as a reference for the use of client/customer application side
+     * This initializes a IAccount instance and associates it with a customerId and registers this with the specified
+     * bank, returns the IAccount as a reference for the use of client/customer application side
      * @param  customerId String
      * @param  bank Bank
-     * @return CashAccount
+     * @return IAccount
      * */
-    @Override
-    public CashAccount openAccountWithBank(String customerId, Bank bank) {
-        CashAccount account = new CashAccount();
+    public IAccount openAccountWithBank(String customerId, Bank bank, IAccount.ACCOUNT_TYPE accountType) {
+        IAccount account;
+        switch (accountType) {
+            case SAVINGS:
+                account = new SavingsAccount(0);
+            case CASH:
+            default:
+                account = new CashAccount();
+        }
         bank.registerAccount(customerId, account);
         return account;
     }
@@ -35,9 +46,8 @@ public class BankService implements IBankService {
      * @param amount double
      * @return double
      * */
-    @Override
     public double withdraw(String customerId, double amount) throws TransactionNotSupportedException {
-        CashAccount account = this.bank.getAccount(customerId);
+        IAccount account = this.bank.getAccount(customerId);
         if (amount > account.getBalance()) {
             throw new TransactionNotSupportedException("Not enough balance to withdraw for the requested amount.");
         }
@@ -51,9 +61,8 @@ public class BankService implements IBankService {
      * @param amount double
      * @return double
      * */
-    @Override
     public double deposit(String customerId, double amount) {
-        CashAccount account = this.bank.getAccount(customerId);
+        IAccount account = this.bank.getAccount(customerId);
         account.updateBalance(amount);
         return account.getBalance();
     }
@@ -62,9 +71,11 @@ public class BankService implements IBankService {
      * @param customerId String
      * @return double
      * */
-    @Override
     public double checkAccountBalance(String customerId) {
-        CashAccount account = this.bank.getAccount(customerId);
+        IAccount account = this.bank.getAccount(customerId);
         return account.getBalance();
+    }
+
+    public void transfer(String customerId, IAccount.ACCOUNT_TYPE from, IAccount.ACCOUNT_TYPE to, double amount) {
     }
 }

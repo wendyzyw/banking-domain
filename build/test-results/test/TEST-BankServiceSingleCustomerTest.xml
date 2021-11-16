@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="BankServiceSingleCustomerTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-10-25T11:17:39" hostname="AU03-WZENG-NB1" time="0.02">
+<testsuite name="BankServiceSingleCustomerTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-11-16T11:05:50" hostname="AU03-WZENG-NB1" time="0.022">
   <properties/>
-  <testcase name="testBankTotalToEqual10AfterDeposit()" classname="BankServiceSingleCustomerTest" time="0.001"/>
-  <testcase name="testCashAccountBalanceToEqual5AfterWithdraw()" classname="BankServiceSingleCustomerTest" time="0.001"/>
-  <testcase name="testInitialCashAccountSetUp()" classname="BankServiceSingleCustomerTest" time="0.003"/>
-  <testcase name="testBankTotalToRemain10AfterDeposits10ThenWithdraw20()" classname="BankServiceSingleCustomerTest" time="0.003"/>
-  <testcase name="testCashAccountBalanceToEqual10AfterDeposit()" classname="BankServiceSingleCustomerTest" time="0.001"/>
+  <testcase name="testBankTotalToEqual10AfterDeposit()" classname="BankServiceSingleCustomerTest" time="0.002"/>
+  <testcase name="testCashAccountBalanceToEqual5AfterWithdraw()" classname="BankServiceSingleCustomerTest" time="0.003"/>
+  <testcase name="testInitialCashAccountSetUp()" classname="BankServiceSingleCustomerTest" time="0.001"/>
+  <testcase name="testBankTotalToRemain10AfterDeposits10ThenWithdraw20()" classname="BankServiceSingleCustomerTest" time="0.005"/>
+  <testcase name="testCashAccountBalanceToEqual10AfterDeposit()" classname="BankServiceSingleCustomerTest" time="0.002"/>
   <testcase name="testInitialBankTotal()" classname="BankServiceSingleCustomerTest" time="0.001"/>
   <testcase name="testCashAccountBalanceToEqual10AfterWithdraw20()" classname="BankServiceSingleCustomerTest" time="0.001"/>
   <testcase name="testBankTotalToEqual5AfterWithdraw5()" classname="BankServiceSingleCustomerTest" time="0.001"/>

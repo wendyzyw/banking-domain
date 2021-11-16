@@ -1,3 +1,7 @@
+package Account;
+
+import Account.IAccount;
+
 /**
  * The modeling of CashAccount is implemented in a minimal form as a single unit of encapsulation wrapping a balance
  * and exposing methods for retrieving and modifying the balance
@@ -9,10 +13,12 @@ public class CashAccount implements IAccount {
         this.balance = 0; // initial balance default to 0
     }
 
+    @Override
     public double getBalance() {
         return balance;
     }
 
+    @Override
     public void updateBalance(double amount) {
         this.balance += amount;
     }
