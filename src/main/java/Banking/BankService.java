@@ -3,6 +3,7 @@ package Banking;
 import Account.CashAccount;
 import Account.IAccount;
 import Account.SavingsAccount;
+import Exceptions.InsufficientFundException;
 import Exceptions.TransactionNotSupportedException;
 
 import java.util.UUID;
@@ -80,6 +81,13 @@ public class BankService {
         return account.getBalance();
     }
 
-    public void transfer(String customerId, IAccount.ACCOUNT_TYPE from, IAccount.ACCOUNT_TYPE to, double amount) {
+    public void transfer(String customerId, UUID from, UUID to, double amount) throws RuntimeException {
+        IAccount sourceAccount = bank.getAccount(customerId, from);
+        IAccount targetAccount = bank.getAccount(customerId, to);
+        if (amount > sourceAccount.getBalance()) {
+            throw new InsufficientFundException("You can't transfer amount exceeding the remaining balance of your account.");
+        }
+        sourceAccount.updateBalance(amount * -1);
+        targetAccount.updateBalance(amount);
     }
 }
