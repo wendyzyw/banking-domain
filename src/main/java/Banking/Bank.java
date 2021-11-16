@@ -1,9 +1,14 @@
+package Banking;
+
+import Account.CashAccount;
 import Account.IAccount;
+import Account.SavingsAccount;
 import Exceptions.CustomerAccountNotRegisteredException;
 import Exceptions.ExistingRegisteredAccountFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * The Bank maintains the minimal data structure for all cash accounts with the use of HashMap to associate each
@@ -11,10 +16,10 @@ import java.util.Map;
  * The Bank methods are exposed only to internal services and are not publicly exposed to customer application
  * */
 public class Bank {
-    private final Map<String, IAccount> cashAccountMap;
+    private final Map<String, Map<UUID, IAccount>> accountMap;
 
     public Bank() {
-        this.cashAccountMap = new HashMap<>();
+        this.accountMap = new HashMap<>();
     }
 
     /**
@@ -22,35 +27,43 @@ public class Bank {
      * @param customerId String
      * @return IAccount
      * */
-    protected IAccount getAccount(String customerId) throws CustomerAccountNotRegisteredException {
-        if (!this.cashAccountMap.containsKey(customerId)) {
+    protected IAccount getAccount(String customerId, UUID accountNumber) throws CustomerAccountNotRegisteredException {
+        if (!this.accountMap.containsKey(customerId)) {
             throw new CustomerAccountNotRegisteredException("Customer with id " + customerId + " does not has an " +
                     "account registered with the bank.");
         }
-        return this.cashAccountMap.get(customerId);
+        return this.accountMap.get(customerId).get(accountNumber);
     }
 
     /**
      * store the customerId and IAccount as key-value pair when a customer opens up an account with the bank via
      * BankService
      * @param customerId String
-     * @param IAccount IAccount
+     * @param account IAccount
      * */
-    protected void registerAccount(String customerId, IAccount IAccount)
+    protected void registerAccount(String customerId, IAccount account)
             throws ExistingRegisteredAccountFoundException {
-        if (this.cashAccountMap.containsKey(customerId)) {
-            throw new ExistingRegisteredAccountFoundException("Customer with id " + customerId + " already has an " +
-                    "registered account in the system.");
+        if (!this.accountMap.containsKey(customerId)) {
+            Map<UUID, IAccount> accounts = new HashMap<>();
+            accounts.put(account.getAccountNumber(), account);
+            this.accountMap.put(customerId, accounts);
+        } else {
+            this.accountMap.get(customerId).put(account.getAccountNumber(), account);
         }
-        this.cashAccountMap.put(customerId, IAccount);
     }
 
     /**
      * calculate the aggregated sum of amount of all registered cash account
      * @return double
      * */
-    protected double getBankTotal() {
-        return cashAccountMap.values().stream().mapToDouble(IAccount::getBalance).sum();
+    public double getBankTotal() {
+        return accountMap.values()
+                .stream()
+                .map(accounts -> accounts.values()
+                                .stream()
+                                .mapToDouble(IAccount::getBalance)
+                                .sum())
+                .reduce(0.0, Double::sum);
     }
 
 }

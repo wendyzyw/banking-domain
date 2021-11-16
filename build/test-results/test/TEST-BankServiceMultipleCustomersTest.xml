@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="BankServiceMultipleCustomersTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-11-16T11:05:50" hostname="AU03-WZENG-NB1" time="0.042">
-  <properties/>
-  <testcase name="bankTotalEquals10AfterTwoTransactionByTwoCustomers()" classname="BankServiceMultipleCustomersTest" time="0.038"/>
-  <testcase name="customer01AccountBalanceEquals10AfterTwoTransactionByTwoCustomers()" classname="BankServiceMultipleCustomersTest" time="0.001"/>
-  <testcase name="customer02AccountBalanceEquals10AfterTwoTransactionByTwoCustomers()" classname="BankServiceMultipleCustomersTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

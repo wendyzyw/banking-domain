@@ -1,5 +1,7 @@
 package Account;
 
+import java.util.UUID;
+
 public interface IAccount {
     enum ACCOUNT_TYPE {
         CASH, SAVINGS
@@ -7,8 +9,10 @@ public interface IAccount {
 
     ACCOUNT_TYPE getAccountType();
 
-    public void updateBalance(double amount);
+    UUID getAccountNumber();
 
-    public double getBalance();
+    void updateBalance(double amount);
+
+    double getBalance();
 
 }

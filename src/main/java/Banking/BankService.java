@@ -1,7 +1,11 @@
+package Banking;
+
 import Account.CashAccount;
 import Account.IAccount;
 import Account.SavingsAccount;
 import Exceptions.TransactionNotSupportedException;
+
+import java.util.UUID;
 
 /**
  * This is a service layer which can be exposed to client/consumer application to manipulate account and perform
@@ -46,8 +50,8 @@ public class BankService {
      * @param amount double
      * @return double
      * */
-    public double withdraw(String customerId, double amount) throws TransactionNotSupportedException {
-        IAccount account = this.bank.getAccount(customerId);
+    public double withdraw(String customerId, UUID accountNumber, double amount) throws TransactionNotSupportedException {
+        IAccount account = this.bank.getAccount(customerId, accountNumber);
         if (amount > account.getBalance()) {
             throw new TransactionNotSupportedException("Not enough balance to withdraw for the requested amount.");
         }
@@ -61,8 +65,8 @@ public class BankService {
      * @param amount double
      * @return double
      * */
-    public double deposit(String customerId, double amount) {
-        IAccount account = this.bank.getAccount(customerId);
+    public double deposit(String customerId, UUID accountNumber, double amount) {
+        IAccount account = this.bank.getAccount(customerId, accountNumber);
         account.updateBalance(amount);
         return account.getBalance();
     }
@@ -71,8 +75,8 @@ public class BankService {
      * @param customerId String
      * @return double
      * */
-    public double checkAccountBalance(String customerId) {
-        IAccount account = this.bank.getAccount(customerId);
+    public double checkAccountBalance(String customerId, UUID accountNumber) {
+        IAccount account = this.bank.getAccount(customerId, accountNumber);
         return account.getBalance();
     }
 

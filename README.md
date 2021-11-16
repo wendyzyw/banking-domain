@@ -22,13 +22,13 @@ The modeling of the bank and account domain is built on top of following assumpt
 
 ### Design decision
 The body of the application consists of 3 entities, whereas the client/customer is not in the scope of this implementation:  
-1. Bank 
+1. Banking 
 
     This models the bank entity where all cash accounts are registered and stored as a reference using a HashMap, using customerId (String) as key and the cash account object reference as value.
 
 2. BankService 
 
-    The BankService composes an instance of the Bank and implements the IBankService interface which exposes a list of transactions for client/consumer application to manage the associated cash accounts.  
+    The BankService composes an instance of the Banking and implements the IBankService interface which exposes a list of transactions for client/consumer application to manage the associated cash accounts.  
 
 3. CashAccount
 
@@ -42,12 +42,12 @@ There are 3 possible runtime exceptions that could potentially be raised in this
 There are certain trade-offs regarding this implementation: 
 
 #### The pros: 
-* <b>Separations of concerns</b>: the Bank, BankService, CashAccount each takes care of a specific area of business logic and are not tightly coupled with one another; 
+* <b>Separations of concerns</b>: the Banking, BankService, CashAccount each takes care of a specific area of business logic and are not tightly coupled with one another; 
 * <b>Encapsulation</b>: client program that mocks customer behavior maintains a reference of the bankService to invoke bank transaction (account registration/deposit/withdraw/balance check), which encapsulates the underlying subsystem/business logic that deals with the account / bank which can potentially be complex;
 * <b>Extensibility</b>: introducing more account types or allowing multiple association of accounts for one customer will incur changes only in the class of BankService, which makes method calls via the bank instance to retrieve associated accounts, and performs updates on the account. Also new services can be easily added into BankService such as transferring money between accounts.  
 #### The cons: 
 * <b>Inefficiency in calculating bank total</b>: each time total balance is retrieved from the bank all cash accounts registered need to extract the balance to calculate an aggregate sum;
-* <b>Single point of failure</b>: BankService acts as the centralized point connecting the Bank internal operations to expose customer facing transactions, this class can potentially grow complicated and accumulate error-prone logic;
+* <b>Single point of failure</b>: BankService acts as the centralized point connecting the Banking internal operations to expose customer facing transactions, this class can potentially grow complicated and accumulate error-prone logic;
 * <b>Potential re-architecturing curve for change in data structure</b>: using HashMap for storing customerId - CashAccount pairs might not become efficient once requirements change such as multiple accounts keeping / multiple account types, also this incurs issue once concurrency & multithreading is introduced. changing this bit requires modification to all bank internal methods potentially.
 
 ### Possible improvements/extensions 
